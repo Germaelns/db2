@@ -1,0 +1,25 @@
+{% extends 'home.html' %}
+{% block content %}
+    <h2>результаты поиска по запросу {{ query }}</h2>
+
+    {% if empty %}
+    {{ empty }}
+    {% endif %}
+
+    <table border="1 px">
+        <tr>
+            <td>ID</td>
+            <td>Оглавление</td>
+            <td>Автор</td>
+            <td>Дата публикации</td>
+        </tr>
+        {% for elem in result_list %}
+            <tr>
+                <td>{{ elem.id }}</td>
+                <td>{{ elem.title }}</td>
+                <td>{{ elem.author }}</td>
+                <td>{{ elem.date }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

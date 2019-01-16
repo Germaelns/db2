@@ -1,0 +1,75 @@
+{% load pool_extras %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+<body>
+
+{% block header %}
+<header>
+    <div id="header">
+        {% if user.is_authenticated %}
+        <a href="logout">выйти( {{ user.username }} )</a>
+        {% else %}
+        <a href="register">Регистрация</a>
+        <a href="login">Авторизация</a>
+        {% endif %}
+    </div>
+</header>
+{% endblock %}
+
+{% if user.is_authenticated %}
+<div id="tools">
+    <div>
+        <form action="" method="post">
+            {% csrf_token %}
+            <label for="">Введите оглавление</label>
+            <input name="search" type="text">
+            <button type="submit">Поиск</button>
+        </form>
+    </div>
+</div>
+{% else %}
+{% endif %}
+
+<div id="content">
+{% block content %}
+    {% if user.is_authenticated %}
+    <table border="1 px">
+        <tr>
+            <td>ID</td>
+            <td>Оглавление</td>
+            <td>Автор</td>
+            <td>Дата публикации</td>
+        </tr>
+        {% for post in all_posts %}
+            <tr>
+                <td>{{ post.id }}</td>
+                <td>{{ post.title }}</td>
+                <td>{{ post.author }}</td>
+                <td>{{ post.date }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+        Пожалуйста авторизуйтесь
+    {% endif %}
+{% endblock %}
+</div>
+
+</div>
+
+
+
+{% block footer %}
+<footer>
+    <div id="footer">
+    </div>
+</footer>
+{% endblock %}
+</body>
+</html>
